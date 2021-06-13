@@ -6,20 +6,7 @@
     </head>
 
     <body>
-<!--        <button onclick="location.href='{% url 'script' %}'">Execute Script</button> <hr>-->
-<!--        {% if data %}-->
-<!--        {{data | safe}}-->
-<!--        {% endif %}-->
-
-        <form action="/external/" method="post">
-            {% csrf_token %}
-            Input Text:
-            <input type="text" name="param" required><br><br>
-            {{data_external}}<br><br>
-            {{data1}}
-            <br><br>
-            <input type="submit" value="Execute External Python Script">
-        </form>
+        <button onclick="location.href='{% url 'rdp_ssh' %}'">Execute Script</button> <hr>
 
     </body>
 

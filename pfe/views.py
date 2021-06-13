@@ -3,23 +3,41 @@ from django.shortcuts import render
 import requests
 import sys
 import subprocess
+import paramiko
 
 from subprocess import run, PIPE
 
 def button(request):
     return render(request, 'home.html')
 
-def output(request):
-    data = requests.get("https://reactnative.dev/movies.json")
-    print(data.text)
-    data = data.text
-    return render(request, 'home.html', {'data': data})
+def execute_rdp_ssh(request):
+    # ssh import and params
+    ssh = paramiko.SSHClient()
+    ssh.load_system_host_keys()
+    ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
-def external(request):
-    inp = request.POST.get('param')
+    # ssh connection
+    ssh.connect('3.22.30.40', port=10063, username='islem', password='0000')
 
-    out = run([sys.executable, '//home//islem//Documents//full_projects//PFEenv//src//test.py', inp], shell=False, stdout=PIPE)
-    # out = run([sys.executable, 'src/Skin_Segmentation/Script/unet2d_model_prediction2.py', inp], shell=False, stdout=PIPE)
+    # Run a command and catch the result
+    stdin, stdout, stderr = ssh.exec_command('cd /home/islem/drive/MyDrive/pfe/Colab\ Notebooks/ \n python3 pfe_ssh.py')
 
-    print(out)
-    return render(request, 'home.html', {'data1': out.stdout} )
+    print(f'STDOUT: {stdout.read().decode("utf8")}')
+    print(f'STDERR: {stderr.read().decode("utf8")}')
+
+    return_ssh_code = stdout.channel.recv_exit_status()
+    print(f'Return code: {return_ssh_code}')
+    if return_ssh_code != 0:
+        print('ssh connenction failed')
+    else:
+        print('ssh connenction stablished')
+
+    # Because they are file objects, they need to be closed
+    stdin.close()
+    stdout.close()
+    stderr.close()
+
+    # Close the client itself
+    ssh.close()
+
+    return render(request, 'home.html')

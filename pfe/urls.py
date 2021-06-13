@@ -16,10 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 from . import views
+from django.conf.urls import include
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', views.button),
-    path('output/', views.output, name="script"),
-    path('external/', views.external),
+    path('rdp_ssh', views.execute_rdp_ssh, name="rdp_ssh"),
+    path('api/', include('post.urls'))
+
 ]
