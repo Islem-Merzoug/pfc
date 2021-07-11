@@ -1,0 +1,32 @@
+sudo docker build -t pfe-docker .
+
+sudo docker run --rm -p 8888:8888 -p 8000:8000 -p 7000:22 -e JUPYTER_ENABLE_LAB=yes -v ~:/home/islem/Documents/full_projects/pfe/pfe-docker-mix pfe-docker
+sudo docker run --rm -p 8888:8888 -p 8000:8000 -e JUPYTER_ENABLE_LAB=yes -v ~:/home/islem pfe-docker
+
+curl localhost:8000
+
+sudo docker kill container_Name
+
+
+#ssh ( https://hub.docker.com/r/adityamandil317/ubuntu-with-ssh )
+docker build -t pfe-docker .
+docker run -d -P --name pfe_docker pfe-docker
+docker port pfe-docker 22
+
+
+
+sudo docker inspect -f "{{ .NetworkSettings.IPAddress }}" container_Name
+
+
+sudo docker build -t ex_sshd .
+sudo docker rm test_ex_sshd -f
+sudo docker run --rm -d -P --name test_ex_sshd ex_sshd
+sudo docker port test_ex_sshd 22
+sudo ssh test@192.168.1.103 -p 49165
+
+sudo docker build -t pfe-docker .
+sudo docker rm test_pfe-docker -f
+sudo docker run --rm -d -P --name test_pfe-docker pfe-docker
+sudo docker run --rm -d -P --name test_pfe-docker -p 7000:22 pfe-docker
+sudo docker port test_pfe-docker 22
+sudo ssh test@192.168.1.103 -p 7000
