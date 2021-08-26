@@ -1,0 +1,35 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+
+* {
+  font-family: 'Sora', sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+btn {
+  border-radius: 4px;
+  background: #256ce1;
+  padding: 10px 22px;
+  color: #fff;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  text-decoration: none;
+
+}
+
+.colors {
+  color: #256ce1;
+  color: #6A99E6;
+  color: #246CE0;
+  color: #2D4161;
+  color: #1C54AD;
+
+}
+
+
+
+
+
